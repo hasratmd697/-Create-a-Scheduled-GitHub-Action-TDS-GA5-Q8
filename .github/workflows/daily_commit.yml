@@ -1,0 +1,43 @@
+name: Daily Scheduled Commit
+
+on:
+  schedule:
+    # Runs at 05:30 UTC every day (you can change the time)
+    # This specific time meets the "no wildcards" requirement.
+    - cron: '30 5 * * *'
+  
+  # This line allows you to manually run the workflow from the Actions tab
+  workflow_dispatch:
+
+# Grant write permissions to the GITHUB_TOKEN
+# This is required for the workflow to push a commit
+permissions:
+  contents: write
+
+jobs:
+  scheduled_commit_job:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Check out the repository's code
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Fetches all history, necessary for git operations
+
+      # Step 2: This step is named with your email as requested
+      - name: 24f1002299@ds.study.iitm.ac.in
+        run: echo "This step fulfills the email naming requirement."
+
+      # Step 3: Configure Git user for the bot
+      - name: Configure Git
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+      # Step 4: Create an empty commit and push it
+      - name: Create and push empty commit
+        run: |
+          # The --allow-empty flag creates a new commit without any file changes
+          git commit --allow-empty -m "Chore: Scheduled daily commit 🤖"
+          git push
