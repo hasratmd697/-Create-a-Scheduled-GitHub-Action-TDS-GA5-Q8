@@ -1,0 +1,21 @@
+# A simple name for your workflow
+name: CI
+
+# This tells GitHub to run the workflow on every 'push' to your repo
+on: [push]
+
+# This is the list of jobs to run
+jobs:
+  # We'll call our one-and-only job 'build'
+  build:
+    # This job will run on a virtual machine provided by GitHub (Ubuntu)
+    runs-on: ubuntu-latest
+
+    # These are the actual steps the job will perform
+    steps:
+      # Step 1: Checks out your repository's code so the workflow can access it
+      - uses: actions/checkout@v4
+
+      # Step 2: A simple command that just prints text. This will succeed.
+      - name: Run a one-line script
+        run: echo "Hello, world!"
